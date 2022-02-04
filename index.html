@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My CRUD Application</title>
+  </head>
+  <style>
+    * {
+      font-family:Consolas;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding-top:2rem;
+      padding-left: 5rem;
+      padding-right: 6rem;
+      border: 10px double black;
+    }
+    .center {
+      margin: 0;
+      position: absolute;
+      /* top: 50%; */
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    h1 {
+    text-align: center;
+    }
+    h3 {
+    text-align: center;
+    font-family:cursive;
+    }
+    .column {
+      float: center;
+      width: 100%;
+    }
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      input {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+      }
+  </style>
+  <body>
+    <div class="container">
+      <h1>MY CRUD APPLICATION</h1>
+      <div >
+        <div class="column">
+          <h3>Register Yourself</h3>
+          <input placeholder="First Name" type="text" id="firstName" /><br><br>
+          <input placeholder="Last Name" type="text" id="lastName" /><br><br>
+          <input placeholder="Email" type="text" id="email" /><br><br>
+          <input placeholder="Password" type="password" id="password" /><br><br>
+          <div class="center"><button class="button" onclick="add()">Submit</button></div>
+        </div>
+      </div>
+      <div class="column">
+        <h3>Registered Person</h3>
+        <ol id="list">
+        </ol>
+      </div>
+    </div>
+    
+  </body>
+</html>
+
+<script>
+  console.log("Called");
+  let fetchRes = fetch("/api/user")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+
+      let list = document.getElementById("list");
+
+      data.forEach((element) => {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(element.firstName));
+        list.appendChild(li);
+      });
+    });
+
+  function add() {
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let body = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    console.log(body);
+    let fetchRes = fetch("/api/user/signup", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        window.location.reload()
+      });
+  }
+  // fetchRes.then(res => {
+  //   console.log(res);
+  // })
+</script>
