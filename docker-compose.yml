@@ -12,7 +12,7 @@ services:
       - "3306:3306"
     container_name: CRUD_appl_mysql
   app:
-    image: poonam3112/nodejs-crud-app-image:latest
+    image: poonam3112/crud-node-app:v1
     ports: 
       - 3000:3000
     volumes: 
