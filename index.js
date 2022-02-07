@@ -16,14 +16,14 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/rvsp", (req, res, next) => {
+app.get("/index", (req, res, next) => {
   res.sendFile(`${__dirname}/index.html`);
 });
 
 app.get("/", (req, res, next) => {
   return res.status(200).json({
     status: true,
-    message: "Hackthon RSVP List API",
+    message: "MY CRUD Application",
   });
 });
 
