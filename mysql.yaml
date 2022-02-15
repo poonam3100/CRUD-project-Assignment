@@ -48,7 +48,7 @@ spec:
               key: mysql-url
         volumeMounts:
           - name: mysql-persistent
-            mountPath: /var/lib/mysql
+            mountPath: /temp/mysql
       volumes:
         - name: mysql-persistent
           persistentVolumeClaim:
